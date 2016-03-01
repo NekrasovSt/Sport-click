@@ -1,0 +1,19 @@
+﻿@using СпортКлик.Сервис
+@model Данные.Интерфейсы.ИИзображениеТовар
+
+
+@*Отбражает картинку и навигацию для Категорий и Производителей*@
+<div class="span3 plan">
+    <ul>
+        <li style="height: 135px">
+            @Html.ColorBoxImage(Model, "group1", "img-polaroid")
+        </li>
+        <li><i class="icon-tag"></i><em>@Константы.Ограничить(Model.Имя)</em></li>
+        <li>
+            <div class="btn-group">
+                <a href="@Html.Ссылка((string)ViewBag.Title, Model.Имя)" class="btn btn-mini btn btn-info"><i class="icon-question-sign"></i>Детально</a>
+                <a href="@Url.Action(Действия.ВсеДля, Контролеры.Товар, new { Имя = Model.Имя, Тип = ViewBag.Title })" class="btn btn-mini btn btn-success" ><i class="icon-tags"></i>Товары(@Model.Товар.Count())</a>
+            </div>
+        </li>
+    </ul>
+</div>

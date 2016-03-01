@@ -1,0 +1,18 @@
+﻿<div class="row-fluid">
+    @using (Html.BeginForm())
+    {
+        @Html.ValidationSummary(true)
+        <fieldset class="form-horizontal">
+            <legend>Заказы</legend>
+            <div class="control-group">
+                <label class="control-label">Отобрать по статусу заказа: </label>
+                <div class="controls">
+                    @{ Html.RenderAction(Действия.DropDown, Контролеры.СтатусЗаказа); }
+                </div>
+            </div>
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary">Просмотреть</button>
+            </div>
+        </fieldset>               
+    }
+</div>

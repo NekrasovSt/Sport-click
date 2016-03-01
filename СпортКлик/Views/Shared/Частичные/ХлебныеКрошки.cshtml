@@ -1,0 +1,27 @@
+﻿<ul class="breadcrumb">
+    @{
+        <li>@Html.ActionLink("Главная", Действия.Онас, Контролеры.Дом)</li>
+        string name = Request.RequestContext.RouteData.DataTokens[Константы.ИмяМаршрута] as string;
+        string controllerName = Request.RequestContext.RouteData.Values["Тип"] as string; 
+        string objectName = Request.RequestContext.RouteData.Values[Константы.Имя] as string;
+        if (name == "КатПроДет")
+        {
+            controllerName = Request.RequestContext.RouteData.Values[Константы.Контролер] as string; 
+        <li><span class="divider">/</span>@Html.ActionLink(controllerName, Действия.Все, controllerName)</li>
+        <li><span class="divider">/</span>@objectName</li>
+        }
+        if (name == "ПроизводителиТовары" || name == "КатегоииТовары" || name == "ТоварыВсеДля")
+        {
+            string Контролер = name == "ПроизводителиТовары" ? Контролеры.Производители : Контролеры.Категории;
+        <li><span class="divider">/</span>@Html.ActionLink(controllerName, Действия.Все, controllerName)</li>
+        <li><span class="divider">/</span><a href="@Html.Ссылка(controllerName, objectName)">@objectName</a></li>
+        <li><span class="divider">/</span>Товары</li>
+        }
+        if(name == "Товары")
+        {
+            <li><span class="divider">/</span><a href="@Html.Ссылка(Контролеры.Товар, Действия.Все)">Товары</a> </li>
+            <li><span class="divider">/</span>@objectName</li>
+        }
+    }
+
+</ul>

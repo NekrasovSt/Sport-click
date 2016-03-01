@@ -1,0 +1,8 @@
+﻿@using (Html.BeginForm(Действия.ИскатьПоИмени, Контролеры.Товар, FormMethod.Post, new { @class = "navbar-search" }))
+{
+    <div class="input-append">
+        <input type="text" class="span2" name="частьИмени" id="searchProduct" data-provide="typeahead" autocomplete="off">
+        <button type="submit" class="btn">Искать товар</button>
+    </div>
+}
+

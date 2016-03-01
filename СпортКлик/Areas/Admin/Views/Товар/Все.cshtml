@@ -1,0 +1,8 @@
+﻿@model PageableData<Данные.Модели.Товар>
+<div id="target">
+    @{ Html.RenderPartial("_Все", Model); }
+</div>
+<p>
+    @Html.ActionLink("Создать новый", "Создать", null, new { @class = "btn" })
+</p>
+

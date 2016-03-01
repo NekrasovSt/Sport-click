@@ -1,0 +1,30 @@
+﻿@using BootstrapSupport
+@model СпортКлик.Models.ПрофильПользователя
+<div class="row-fluid">
+    @using (Html.BeginForm())
+    {
+        @Html.ValidationSummary(true)
+        <fieldset class="form-horizontal">
+            <legend>Ваш данные : @User.Identity.Name</legend>
+            @TextBoxGroup("Имя", Model.Имя)
+            @TextBoxGroup("Фамилия", Model.Фамилия)
+            @TextBoxGroup("Отчество", Model.Отчество)
+            @TextBoxGroup("Телефон", Model.Телефон)
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary">Сохранить</button>
+                @Html.ActionLink("Отменить", Действия.Все, Контролеры.Категории, null, new { @class = "btn " })
+            </div>
+        </fieldset>
+    }
+</div>
+@helper TextBoxGroup(string name, string value)
+{
+    <div class="control-group">
+        <label class="control-label">@name</label>
+        <div class="controls">
+            @Html.TextBox(name, value, new { @class = "input-xlarge" })
+            @Html.ValidationMessage(name, null, new { @class = "help-inline" })
+        </div>
+    </div>
+
+}

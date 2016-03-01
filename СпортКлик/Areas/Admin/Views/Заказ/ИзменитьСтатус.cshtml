@@ -1,0 +1,36 @@
+﻿@{
+    ViewBag.Title = "ИзменитьСтатус";
+}
+@model Данные.Модели.ИсторияЗаказа
+<h5>ИзменитьСтатус</h5>
+<div class="row-fluid">
+    @using (Html.BeginForm())
+    {
+        <fieldset class="form-horizontal">
+            <legend>Смена заказа</legend>
+            <div class="control-group">
+                <label class="control-label">Статус</label>
+                <div class="controls">
+                     @{ Html.RenderAction(Действия.DropDown, Контролеры.СтатусЗаказа); }
+                </div>
+            </div>
+            @Html.Hidden("ИдЗаказ", Model.ИдЗаказ)
+            <div class="control-group">
+                <label class="control-label">Описание</label>
+                <div class="controls">
+                    @Html.TextAreaFor(i => i.Коментарий, new { @class = "input-xlarge" })
+                </div>
+            </div>
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary">Изменить</button>
+                @Html.ActionLink("Отменить", "Все", null, new { @class = "btn " })
+            </div>
+        </fieldset>
+    }
+</div>
+@section Scripts
+{
+    <script type="text/javascript">
+        CKEDITOR.replace("Коментарий");
+    </script>
+}

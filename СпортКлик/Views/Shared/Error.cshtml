@@ -1,0 +1,46 @@
+﻿@model HandleErrorInfo
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Ошибка</title>
+    <link href="@Styles.Url("~/content/css")" rel="stylesheet"/>
+    <style type="text/css">
+        body {
+            padding-top: 60px;
+            padding-bottom: 40px;
+        }
+    </style>
+    <link href="@Styles.Url("~/Content/css-responsive")" rel="stylesheet" type="text/css" />
+</head>
+<body>
+    <div class="row-fluid">
+        <div class="span8 offset2">
+            <div class="alert alert-block">
+                <h3>Произошла ошибка при обработке вашего запроса.
+                </h3>
+                <p>
+                    В результате выполнения запроса 
+возникла непредвиденная ситуация. Информация о 
+случившемся уже направлена администраторам системы. 
+Проблема будет устранена в кратчайшие сроки.
+Приносим вам свои извинения за возможно доставленные неудобства.
+                </p>
+                @Html.ActionLink("На главную", Действия.Все, Контролеры.Категории)
+            </div>
+            @if (User.Identity.IsAuthenticated && User.IsInRole(РолиПользователей.Администратор))
+            {
+                <div class="alert alert-error">
+                    <h3>@Model.Exception.Message</h3>
+                    <p>@Model.Exception.InnerException</p>
+                    <p>@Model.Exception.StackTrace</p>
+                </div>
+            }
+        </div>
+    </div>
+</body>
+</html>

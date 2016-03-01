@@ -1,0 +1,18 @@
+﻿@{
+    Layout = null;
+}
+<div class="span3">
+    <div class="well sidebar-nav">
+        <img src="@Url.Content("~/Content/Download/1199-2.png")" alt="СпортКлик">
+        <ul class="nav nav-list">
+            <li class="nav-header">Категории</li>
+            <li class="divider"></li>
+            @{ Html.RenderAction(Действия.Список, Контролеры.Категории); }
+        </ul>
+        <ul class="nav nav-list">
+            <li class="nav-header">Производители</li>
+            <li class="divider"></li>
+            @{ Html.RenderAction(Действия.Список, Контролеры.Производители); }
+        </ul>
+    </div>
+</div>

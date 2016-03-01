@@ -1,0 +1,39 @@
+﻿@using Данные.Модели
+@model PageableData<Товар>
+<div id="target">
+    @foreach (var i in Model.Группа)
+    {
+        <div class="row-fluid">
+            @foreach (Данные.Модели.Товар t in i)
+            {
+                @Миниатюра(t)          
+            }
+        </div>
+    }
+    <div class="pagination pagination-mini">
+        @{
+            string action = ViewBag.Действие;
+            if (action == null)
+            {
+            @Html.PageLinks(Model.PageNo, Model.CountPage, x => Url.Action(Действия.Все, new { page = x }));
+            }
+            else
+            {
+            @Html.PageLinks(Model.PageNo, Model.CountPage, x => Url.Action("ВсеДля", new { page = x, Тип = action, Имя = ViewBag.Имя }));
+            }
+        }
+    </div>
+    @helper Миниатюра(Данные.Модели.Товар element)
+{
+        <div class="span3">
+            @Html.ИзображениеДляГлавнойСтраницы(element)
+            <div class="span12">
+                <p><span class="label label-info">@Константы.Ограничить(element.Имя)</span></p>
+                <p><span class="label label-success">Стоимость: @element.Цена руб.</span></p>
+                <p>@Html.ActionLink("Детально", Действия.Детально, Контролеры.Товар, new { Ид = element.Ид, Имя = element.Имя }, new { @class = "btn btn-mini" })
+                    <a href="@Url.Action(Действия.Добавить, Контролеры.Корзина, new { Ид = element.Ид })" class="btn btn-mini btn-primary" ><i class="icon-shopping-cart icon-black"></i>В корзину</a>
+                </p>
+            </div>
+        </div>
+    }
+</div>

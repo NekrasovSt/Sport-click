@@ -1,0 +1,51 @@
+﻿@using Microsoft.Web.Mvc
+@model PageableData<Данные.Модели.СтатусЗаказа>
+<h4>Все @ViewBag.Title</h4>
+<table class="table table-striped">
+    <caption></caption>
+    <thead>
+        <tr>
+            <th>Имя
+            </th>
+            <th>Описание
+            </th>
+            <th>Действие</th>
+            <th></th>
+        </tr>
+    </thead>
+    @foreach (Данные.Интерфейсы.ИБазовый m in Model.Список)
+    {
+        <tr>
+            <td>
+                @СпортКлик.Сервис.Константы.Ограничить(m.Имя)
+            </td>
+            <td>
+                @СпортКлик.Сервис.Константы.Ограничить(m.Описание)
+            </td>
+            <td>
+                <div class="btn-group">
+                    <div class="btn dropdown-toggle" data-toggle="dropdown">
+                        Действие                     
+                        <span class="caret"></span>
+                    </div>
+                    <ul class="dropdown-menu">
+                        @{
+                            <li>@Html.ActionLink("Изменить", Действия.Изменить, new { Ид = m.Ид })</li>
+                            <li class="divider"></li>
+                            <li>@Html.ActionLink("Удалить", Действия.Удалить, new { Ид = m.Ид })</li>
+                               
+                        }
+                    </ul>
+                </div>
+            </td>
+        </tr>
+    }
+</table>
+<div class="pagination pagination-mini">
+    @Html.PageLinks(Model.PageNo, Model.CountPage, x => Url.Action(Действия.Все, new { page = x }))
+</div>
+<p>
+    @Html.ActionLink("Создать новый", "Создать", null, new { @class = "btn" })
+</p>
+
+

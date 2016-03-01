@@ -1,0 +1,19 @@
+﻿@model СпортКлик.Models.LogOnViewModel
+@using СпортКлик.Areas.Admin
+<div class="modal hide" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-header well">
+      <p>Пожалуйста введите ваш <em>логин</em> и <em>пароль</em>.</p>
+    </div>
+    <div class="modal-body">
+        @using (Html.BeginForm(Действия.AjaxLogin, Контролеры.Account, FormMethod.Post, new { @class = "form-horizontal", id = "LoginForm" }))
+        {
+                @Html.ValidationSummary(true)
+                @Html.AdminTextBox(i => i.UserName)
+                @Html.AdminPasswordBox(i => i.Password)
+        }
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-success" id="LoginButton">Вход</button>
+        <button class="btn" data-dismiss="modal" aria-hidden="true">Выход</button>
+    </div>
+</div>

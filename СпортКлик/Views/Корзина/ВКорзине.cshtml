@@ -1,0 +1,48 @@
+﻿@using СпортКлик.Models
+@model Корзина
+<div class="page-header">
+    <h5>Корзина заказов</h5>
+</div>
+<p>Здесь вы можите изменить количество, товаров.</p>
+<p>При значении количества: <strong>0</strong> - товар будет <em>удален из списка.</em></p>
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Название </th>
+            <th>Количество</th>
+        </tr>
+    </thead>
+    @foreach (СтрокаВКорзине item in Model.Все)
+    {
+        <tbody>
+            <tr>
+                <td><strong>@item.товар.Имя</strong>из категории <strong>@item.товар.Категории.Имя</strong></td>
+                <td>
+                    @using (Html.BeginForm(Действия.ИзменитьКоличество, Контролеры.Корзина, FormMethod.Post, new { @class = "form-horizontal" }))
+                    {
+                        <input type="number" name ="количество" value="@item.количество" class="input-small"/><span class="add-on">шт.</span>
+                        <input type="hidden" name ="Ид" value="@item.товар.Ид" />
+                        <input type="submit" class="btn btn-warning btn-mini" value="Изменить" /> 
+                        @Html.ActionLink("Удалить", Действия.Удалить, Контролеры.Корзина, new { Ид = item.товар.Ид }, new { @class = "btn btn-danger btn-mini" })
+                    }
+                </td>
+            </tr>
+        </tbody>
+    }
+</table>
+@Html.ActionLink("Назад к товарам", Действия.Все, Контролеры.Товар, null, new { @class = "btn btn-info btn-mini" })
+
+@if (!User.Identity.IsAuthenticated)
+{
+    <p>Для оформления заказа нужно, войти под своим именем</p>
+    <strong><a href="#" class = "LoginPopup">Войти</a></strong>
+    @:или
+    <strong>@Html.ActionLink("Зарегистрироватся", Действия.Зарегистрироватся, Контролеры.Account)</strong>
+}
+else
+{
+    if (Model.ВсегоТоваров != 0)
+    {
+    @Html.ActionLink("Оформить заказ", Действия.ОформитьЗаказ, Контролеры.Заказ, null, new { @class = "btn btn-success btn-mini" }) ;
+    }
+}

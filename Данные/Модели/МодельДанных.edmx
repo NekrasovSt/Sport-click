@@ -1,0 +1,514 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="2.0" xmlns:edmx="http://schemas.microsoft.com/ado/2008/10/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="СпортКликModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+        <EntityType Name="Заказ">
+          <Key>
+            <PropertyRef Name="Ид" />
+          </Key>
+          <Property Name="Ид" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ДатаСоздания" Type="datetime" Nullable="false" />
+          <Property Name="ИмяКлиента" Type="nvarchar" MaxLength="100" />
+          <Property Name="ФамилияКлиента" Type="nvarchar" MaxLength="100" />
+          <Property Name="ОтчествоКлиента" Type="nvarchar" MaxLength="100" />
+          <Property Name="Телефон" Type="nvarchar" MaxLength="50" />
+          <Property Name="Почта" Type="nvarchar" MaxLength="50" />
+          <Property Name="ИдКлиента" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="ИдСотрудника" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="ДатаИзменения" Type="datetime" Nullable="false" />
+          <Property Name="ИдСтатуса" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ИсторияЗаказа">
+          <Key>
+            <PropertyRef Name="Ид" />
+          </Key>
+          <Property Name="Ид" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ИдЗаказ" Type="int" Nullable="false" />
+          <Property Name="ДатаИзменения" Type="datetime" Nullable="false" />
+          <Property Name="ИдСотрудника" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Коментарий" Type="nvarchar(max)" />
+          <Property Name="СтатусИд" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Категории">
+          <Key>
+            <PropertyRef Name="Ид" />
+          </Key>
+          <Property Name="Ид" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Имя" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Описание" Type="nvarchar(max)" />
+          <Property Name="ИмяФайлаИзображения" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Отзыв">
+          <Key>
+            <PropertyRef Name="Ид" />
+          </Key>
+          <Property Name="Ид" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Текст" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Проверен" Type="bit" Nullable="false" />
+          <Property Name="Дата" Type="datetime" Nullable="false" />
+          <Property Name="Пользователь" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="ПользовательИд" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Сущность" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="СущностьИд" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Производители">
+          <Key>
+            <PropertyRef Name="Ид" />
+          </Key>
+          <Property Name="Ид" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Имя" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Описание" Type="nvarchar(max)" />
+          <Property Name="ИмяФайлаИзображения" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="СвойствоЗаказа">
+          <Key>
+            <PropertyRef Name="Ид" />
+          </Key>
+          <Property Name="Ид" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ИмяТовара" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="ИдТовара" Type="int" Nullable="false" />
+          <Property Name="ИмяПроизводителя" Type="nvarchar(max)" />
+          <Property Name="Цена" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Скидка" Type="int" />
+          <Property Name="ИдЗаказа" Type="int" Nullable="false" />
+          <Property Name="Количество" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="СтатусЗаказа">
+          <Key>
+            <PropertyRef Name="Ид" />
+          </Key>
+          <Property Name="Ид" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Имя" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Описание" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="Товар">
+          <Key>
+            <PropertyRef Name="Ид" />
+          </Key>
+          <Property Name="Ид" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Имя" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Описание" Type="nvarchar(max)" />
+          <Property Name="ИмяФайлаИзображения" Type="nvarchar" MaxLength="50" />
+          <Property Name="КатегорияИд" Type="int" Nullable="false" />
+          <Property Name="ПроизводительИд" Type="int" Nullable="false" />
+          <Property Name="Цена" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="Скидка" Type="int" />
+        </EntityType>
+        <Association Name="FK_Заказ_СтатусЗаказа">
+          <End Role="СтатусЗаказа" Type="Self.СтатусЗаказа" Multiplicity="1" />
+          <End Role="Заказ" Type="Self.Заказ" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="СтатусЗаказа">
+              <PropertyRef Name="Ид" />
+            </Principal>
+            <Dependent Role="Заказ">
+              <PropertyRef Name="ИдСтатуса" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ИсторияЗаказа_Заказ">
+          <End Role="Заказ" Type="Self.Заказ" Multiplicity="1" />
+          <End Role="ИсторияЗаказа" Type="Self.ИсторияЗаказа" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Заказ">
+              <PropertyRef Name="Ид" />
+            </Principal>
+            <Dependent Role="ИсторияЗаказа">
+              <PropertyRef Name="ИдЗаказ" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_СвойствоЗаказа_Заказ">
+          <End Role="Заказ" Type="Self.Заказ" Multiplicity="1" />
+          <End Role="СвойствоЗаказа" Type="Self.СвойствоЗаказа" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Заказ">
+              <PropertyRef Name="Ид" />
+            </Principal>
+            <Dependent Role="СвойствоЗаказа">
+              <PropertyRef Name="ИдЗаказа" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Товар_Категории">
+          <End Role="Категории" Type="Self.Категории" Multiplicity="1" />
+          <End Role="Товар" Type="Self.Товар" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Категории">
+              <PropertyRef Name="Ид" />
+            </Principal>
+            <Dependent Role="Товар">
+              <PropertyRef Name="КатегорияИд" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Товар_Производители">
+          <End Role="Производители" Type="Self.Производители" Multiplicity="1" />
+          <End Role="Товар" Type="Self.Товар" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Производители">
+              <PropertyRef Name="Ид" />
+            </Principal>
+            <Dependent Role="Товар">
+              <PropertyRef Name="ПроизводительИд" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="СпортКликModelStoreContainer">
+          <EntitySet Name="Заказ" EntityType="Self.Заказ" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ИсторияЗаказа" EntityType="Self.ИсторияЗаказа" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Категории" EntityType="Self.Категории" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Отзыв" EntityType="Self.Отзыв" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Производители" EntityType="Self.Производители" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="СвойствоЗаказа" EntityType="Self.СвойствоЗаказа" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="СтатусЗаказа" EntityType="Self.СтатусЗаказа" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Товар" EntityType="Self.Товар" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Заказ_СтатусЗаказа" Association="Self.FK_Заказ_СтатусЗаказа">
+            <End Role="СтатусЗаказа" EntitySet="СтатусЗаказа" />
+            <End Role="Заказ" EntitySet="Заказ" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ИсторияЗаказа_Заказ" Association="Self.FK_ИсторияЗаказа_Заказ">
+            <End Role="Заказ" EntitySet="Заказ" />
+            <End Role="ИсторияЗаказа" EntitySet="ИсторияЗаказа" />
+          </AssociationSet>
+          <AssociationSet Name="FK_СвойствоЗаказа_Заказ" Association="Self.FK_СвойствоЗаказа_Заказ">
+            <End Role="Заказ" EntitySet="Заказ" />
+            <End Role="СвойствоЗаказа" EntitySet="СвойствоЗаказа" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Товар_Категории" Association="Self.FK_Товар_Категории">
+            <End Role="Категории" EntitySet="Категории" />
+            <End Role="Товар" EntitySet="Товар" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Товар_Производители" Association="Self.FK_Товар_Производители">
+            <End Role="Производители" EntitySet="Производители" />
+            <End Role="Товар" EntitySet="Товар" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="СпортКликModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+        <EntityContainer Name="СпортКлик" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Категории" EntityType="СпортКликModel.Категории" />
+          <EntitySet Name="Товар" EntityType="СпортКликModel.Товар" />
+          <AssociationSet Name="FK_Товар_Категории" Association="СпортКликModel.FK_Товар_Категории">
+            <End Role="Категории" EntitySet="Категории" />
+            <End Role="Товар" EntitySet="Товар" />
+          </AssociationSet>
+          <EntitySet Name="Производители" EntityType="СпортКликModel.Производители" />
+          <EntitySet Name="СтатусЗаказа" EntityType="СпортКликModel.СтатусЗаказа" />
+          <EntitySet Name="СвойствоЗаказа" EntityType="СпортКликModel.СвойствоЗаказа" />
+          <EntitySet Name="Заказ" EntityType="СпортКликModel.Заказ" />
+          <AssociationSet Name="FK_Заказ_СтатусЗаказа" Association="СпортКликModel.FK_Заказ_СтатусЗаказа">
+            <End Role="СтатусЗаказа" EntitySet="СтатусЗаказа" />
+            <End Role="Заказ" EntitySet="Заказ" />
+          </AssociationSet>
+          <AssociationSet Name="FK_СвойствоЗаказа_Заказ" Association="СпортКликModel.FK_СвойствоЗаказа_Заказ">
+            <End Role="Заказ" EntitySet="Заказ" />
+            <End Role="СвойствоЗаказа" EntitySet="СвойствоЗаказа" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Товар_Производители" Association="СпортКликModel.FK_Товар_Производители">
+            <End Role="Производители" EntitySet="Производители" />
+            <End Role="Товар" EntitySet="Товар" />
+          </AssociationSet>
+          <EntitySet Name="ИсторияЗаказа" EntityType="СпортКликModel.ИсторияЗаказа" />
+          <AssociationSet Name="FK_ИсторияЗаказа_Заказ" Association="СпортКликModel.FK_ИсторияЗаказа_Заказ">
+            <End Role="Заказ" EntitySet="Заказ" />
+            <End Role="ИсторияЗаказа" EntitySet="ИсторияЗаказа" />
+          </AssociationSet>
+          <EntitySet Name="Отзыв" EntityType="СпортКликModel.Отзыв" />
+        </EntityContainer>
+        <EntityType Name="Категории">
+          <Key>
+            <PropertyRef Name="Ид" />
+          </Key>
+          <Property Name="Ид" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Имя" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="Описание" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="ИмяФайлаИзображения" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="Товар" Relationship="СпортКликModel.FK_Товар_Категории" FromRole="Категории" ToRole="Товар" />
+        </EntityType>
+        <EntityType Name="Товар">
+          <Key>
+            <PropertyRef Name="Ид" />
+          </Key>
+          <Property Type="Int32" Name="Ид" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="Имя" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Описание" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="ИмяФайлаИзображения" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="КатегорияИд" Nullable="false" />
+          <Property Type="Int32" Name="ПроизводительИд" Nullable="false" />
+          <NavigationProperty Name="Категории" Relationship="СпортКликModel.FK_Товар_Категории" FromRole="Товар" ToRole="Категории" />
+          <Property Type="Decimal" Name="Цена" Nullable="false" Precision="10" Scale="2" />
+          <Property Type="Int32" Name="Скидка" />
+          <NavigationProperty Name="Производители" Relationship="СпортКликModel.FK_Товар_Производители" FromRole="Товар" ToRole="Производители" />
+        </EntityType>
+        <Association Name="FK_Товар_Категории">
+          <End Type="СпортКликModel.Категории" Role="Категории" Multiplicity="1" />
+          <End Type="СпортКликModel.Товар" Role="Товар" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Категории">
+              <PropertyRef Name="Ид" />
+            </Principal>
+            <Dependent Role="Товар">
+              <PropertyRef Name="КатегорияИд" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Производители">
+          <Key>
+            <PropertyRef Name="Ид" />
+          </Key>
+          <Property Type="Int32" Name="Ид" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="Имя" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Описание" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="ИмяФайлаИзображения" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Товар" Relationship="СпортКликModel.FK_Товар_Производители" FromRole="Производители" ToRole="Товар" />
+        </EntityType>
+        <EntityType Name="СтатусЗаказа">
+          <Key>
+            <PropertyRef Name="Ид" />
+          </Key>
+          <Property Type="Int32" Name="Ид" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="Имя" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Описание" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Заказ" Relationship="СпортКликModel.FK_Заказ_СтатусЗаказа" FromRole="СтатусЗаказа" ToRole="Заказ" />
+        </EntityType>
+        <EntityType Name="СвойствоЗаказа">
+          <Key>
+            <PropertyRef Name="Ид" />
+          </Key>
+          <Property Type="Int32" Name="Ид" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="ИмяТовара" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="ИдТовара" Nullable="false" />
+          <Property Type="String" Name="ИмяПроизводителя" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="Decimal" Name="Цена" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="Int32" Name="Скидка" />
+          <Property Type="Int32" Name="ИдЗаказа" Nullable="false" />
+          <Property Type="Int32" Name="Количество" Nullable="false" />
+          <NavigationProperty Name="Заказ" Relationship="СпортКликModel.FK_СвойствоЗаказа_Заказ" FromRole="СвойствоЗаказа" ToRole="Заказ" />
+        </EntityType>
+        <EntityType Name="Заказ">
+          <Key>
+            <PropertyRef Name="Ид" />
+          </Key>
+          <Property Type="Int32" Name="Ид" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="DateTime" Name="ДатаСоздания" Nullable="false" Precision="3" />
+          <Property Type="String" Name="ИмяКлиента" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="ФамилияКлиента" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="ОтчествоКлиента" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Телефон" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Почта" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="Guid" Name="ИдКлиента" Nullable="false" />
+          <Property Type="Guid" Name="ИдСотрудника" Nullable="false" />
+          <Property Type="DateTime" Name="ДатаИзменения" Nullable="false" Precision="3" />
+          <Property Type="Int32" Name="ИдСтатуса" Nullable="false" />
+          <NavigationProperty Name="СтатусЗаказа" Relationship="СпортКликModel.FK_Заказ_СтатусЗаказа" FromRole="Заказ" ToRole="СтатусЗаказа" />
+          <NavigationProperty Name="СвойствоЗаказа" Relationship="СпортКликModel.FK_СвойствоЗаказа_Заказ" FromRole="Заказ" ToRole="СвойствоЗаказа" />
+          <NavigationProperty Name="ИсторияЗаказа" Relationship="СпортКликModel.FK_ИсторияЗаказа_Заказ" FromRole="Заказ" ToRole="ИсторияЗаказа" />
+        </EntityType>
+        <Association Name="FK_Заказ_СтатусЗаказа">
+          <End Type="СпортКликModel.СтатусЗаказа" Role="СтатусЗаказа" Multiplicity="1" />
+          <End Type="СпортКликModel.Заказ" Role="Заказ" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="СтатусЗаказа">
+              <PropertyRef Name="Ид" />
+            </Principal>
+            <Dependent Role="Заказ">
+              <PropertyRef Name="ИдСтатуса" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_СвойствоЗаказа_Заказ">
+          <End Type="СпортКликModel.Заказ" Role="Заказ" Multiplicity="1" />
+          <End Type="СпортКликModel.СвойствоЗаказа" Role="СвойствоЗаказа" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Заказ">
+              <PropertyRef Name="Ид" />
+            </Principal>
+            <Dependent Role="СвойствоЗаказа">
+              <PropertyRef Name="ИдЗаказа" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Товар_Производители">
+          <End Type="СпортКликModel.Производители" Role="Производители" Multiplicity="1" />
+          <End Type="СпортКликModel.Товар" Role="Товар" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Производители">
+              <PropertyRef Name="Ид" />
+            </Principal>
+            <Dependent Role="Товар">
+              <PropertyRef Name="ПроизводительИд" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="ИсторияЗаказа">
+          <Key>
+            <PropertyRef Name="Ид" />
+          </Key>
+          <Property Type="Int32" Name="Ид" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="ИдЗаказ" Nullable="false" />
+          <Property Type="DateTime" Name="ДатаИзменения" Nullable="false" Precision="3" />
+          <Property Type="Guid" Name="ИдСотрудника" Nullable="false" />
+          <Property Type="String" Name="Коментарий" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Заказ" Relationship="СпортКликModel.FK_ИсторияЗаказа_Заказ" FromRole="ИсторияЗаказа" ToRole="Заказ" />
+          <Property Type="Int32" Name="СтатусИд" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_ИсторияЗаказа_Заказ">
+          <End Type="СпортКликModel.Заказ" Role="Заказ" Multiplicity="1" />
+          <End Type="СпортКликModel.ИсторияЗаказа" Role="ИсторияЗаказа" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Заказ">
+              <PropertyRef Name="Ид" />
+            </Principal>
+            <Dependent Role="ИсторияЗаказа">
+              <PropertyRef Name="ИдЗаказ" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Отзыв">
+          <Key>
+            <PropertyRef Name="Ид" />
+          </Key>
+          <Property Type="Int32" Name="Ид" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="Текст" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="Boolean" Name="Проверен" Nullable="false" />
+          <Property Type="DateTime" Name="Дата" Nullable="false" Precision="3" />
+          <Property Type="String" Name="Пользователь" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="Guid" Name="ПользовательИд" Nullable="false" />
+          <Property Type="String" Name="Сущность" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="СущностьИд" Nullable="false" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="СпортКликModelStoreContainer" CdmEntityContainer="СпортКлик">
+    <EntitySetMapping Name="Категории">
+      <EntityTypeMapping TypeName="IsTypeOf(СпортКликModel.Категории)">
+        <MappingFragment StoreEntitySet="Категории">
+          <ScalarProperty Name="Ид" ColumnName="Ид" />
+          <ScalarProperty Name="Имя" ColumnName="Имя" />
+          <ScalarProperty Name="Описание" ColumnName="Описание" />
+          <ScalarProperty Name="ИмяФайлаИзображения" ColumnName="ИмяФайлаИзображения" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Товар">
+      <EntityTypeMapping TypeName="IsTypeOf(СпортКликModel.Товар)">
+        <MappingFragment StoreEntitySet="Товар">
+          <ScalarProperty Name="Ид" ColumnName="Ид" />
+          <ScalarProperty Name="Имя" ColumnName="Имя" />
+          <ScalarProperty Name="Описание" ColumnName="Описание" />
+          <ScalarProperty Name="ИмяФайлаИзображения" ColumnName="ИмяФайлаИзображения" />
+          <ScalarProperty Name="КатегорияИд" ColumnName="КатегорияИд" />
+          <ScalarProperty Name="ПроизводительИд" ColumnName="ПроизводительИд" />
+          <ScalarProperty Name="Цена" ColumnName="Цена" />
+          <ScalarProperty Name="Скидка" ColumnName="Скидка" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Производители">
+      <EntityTypeMapping TypeName="IsTypeOf(СпортКликModel.Производители)">
+        <MappingFragment StoreEntitySet="Производители">
+          <ScalarProperty Name="Ид" ColumnName="Ид" />
+          <ScalarProperty Name="Имя" ColumnName="Имя" />
+          <ScalarProperty Name="Описание" ColumnName="Описание" />
+          <ScalarProperty Name="ИмяФайлаИзображения" ColumnName="ИмяФайлаИзображения" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="СтатусЗаказа">
+      <EntityTypeMapping TypeName="IsTypeOf(СпортКликModel.СтатусЗаказа)">
+        <MappingFragment StoreEntitySet="СтатусЗаказа">
+          <ScalarProperty Name="Ид" ColumnName="Ид" />
+          <ScalarProperty Name="Имя" ColumnName="Имя" />
+          <ScalarProperty Name="Описание" ColumnName="Описание" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="СвойствоЗаказа">
+      <EntityTypeMapping TypeName="IsTypeOf(СпортКликModel.СвойствоЗаказа)">
+        <MappingFragment StoreEntitySet="СвойствоЗаказа">
+          <ScalarProperty Name="Ид" ColumnName="Ид" />
+          <ScalarProperty Name="ИмяТовара" ColumnName="ИмяТовара" />
+          <ScalarProperty Name="ИдТовара" ColumnName="ИдТовара" />
+          <ScalarProperty Name="ИмяПроизводителя" ColumnName="ИмяПроизводителя" />
+          <ScalarProperty Name="Цена" ColumnName="Цена" />
+          <ScalarProperty Name="Скидка" ColumnName="Скидка" />
+          <ScalarProperty Name="ИдЗаказа" ColumnName="ИдЗаказа" />
+          <ScalarProperty Name="Количество" ColumnName="Количество" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Заказ">
+      <EntityTypeMapping TypeName="IsTypeOf(СпортКликModel.Заказ)">
+        <MappingFragment StoreEntitySet="Заказ">
+          <ScalarProperty Name="Ид" ColumnName="Ид" />
+          <ScalarProperty Name="ДатаСоздания" ColumnName="ДатаСоздания" />
+          <ScalarProperty Name="ИмяКлиента" ColumnName="ИмяКлиента" />
+          <ScalarProperty Name="ФамилияКлиента" ColumnName="ФамилияКлиента" />
+          <ScalarProperty Name="ОтчествоКлиента" ColumnName="ОтчествоКлиента" />
+          <ScalarProperty Name="Телефон" ColumnName="Телефон" />
+          <ScalarProperty Name="Почта" ColumnName="Почта" />
+          <ScalarProperty Name="ИдКлиента" ColumnName="ИдКлиента" />
+          <ScalarProperty Name="ИдСотрудника" ColumnName="ИдСотрудника" />
+          <ScalarProperty Name="ДатаИзменения" ColumnName="ДатаИзменения" />
+          <ScalarProperty Name="ИдСтатуса" ColumnName="ИдСтатуса" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ИсторияЗаказа">
+      <EntityTypeMapping TypeName="IsTypeOf(СпортКликModel.ИсторияЗаказа)">
+        <MappingFragment StoreEntitySet="ИсторияЗаказа">
+          <ScalarProperty Name="Ид" ColumnName="Ид" />
+          <ScalarProperty Name="ИдЗаказ" ColumnName="ИдЗаказ" />
+          <ScalarProperty Name="ДатаИзменения" ColumnName="ДатаИзменения" />
+          <ScalarProperty Name="ИдСотрудника" ColumnName="ИдСотрудника" />
+          <ScalarProperty Name="Коментарий" ColumnName="Коментарий" />
+          <ScalarProperty Name="СтатусИд" ColumnName="СтатусИд" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Отзыв">
+      <EntityTypeMapping TypeName="IsTypeOf(СпортКликModel.Отзыв)">
+        <MappingFragment StoreEntitySet="Отзыв">
+          <ScalarProperty Name="Ид" ColumnName="Ид" />
+          <ScalarProperty Name="Текст" ColumnName="Текст" />
+          <ScalarProperty Name="Проверен" ColumnName="Проверен" />
+          <ScalarProperty Name="Дата" ColumnName="Дата" />
+          <ScalarProperty Name="Пользователь" ColumnName="Пользователь" />
+          <ScalarProperty Name="ПользовательИд" ColumnName="ПользовательИд" />
+          <ScalarProperty Name="Сущность" ColumnName="Сущность" />
+          <ScalarProperty Name="СущностьИд" ColumnName="СущностьИд" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+        <DesignerProperty Name="UseLegacyProvider" Value="True" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

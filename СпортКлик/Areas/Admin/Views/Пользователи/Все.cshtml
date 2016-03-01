@@ -1,0 +1,55 @@
+﻿@model MembershipUserCollection
+<h4>Все @ViewBag.Title</h4>
+<table class="table table-striped">
+    <caption></caption>
+    <thead>
+        <tr>
+            <th>Ник
+            </th>
+            <th>Email
+            </th>
+            <th>Разрешен</th>
+            <th>Действие</th>
+            <th></th>
+        </tr>
+    </thead>
+    @foreach (MembershipUser m in Model)
+    {
+        <tr>
+            <td>
+                @m.UserName
+            </td>
+            <td>
+                @m.Email
+            </td>
+            <td>@if (m.IsApproved)
+                {
+                <span class="label label-success">Да</span> 
+                }
+                else
+                {
+                <span class="label label-important">Нет</span> 
+                }
+
+            </td>
+            <td>
+                <div class="btn-group">
+                    <button class="btn btn-small">Действие</button>
+                    <div class="btn btn-small dropdown-toggle" data-toggle="dropdown">
+                        <span class="caret"></span>
+                    </div>
+                    <ul class="dropdown-menu">
+                        @if (!m.IsApproved)
+                        {
+                            <li>@Html.ActionLink("Разрешить", Действия.Разрешить, new { Ид = m.ProviderUserKey })</li>
+                        }
+                        else
+                        {
+                            <li>@Html.ActionLink("Запретить", Действия.Запретить, new { Ид = m.ProviderUserKey })</li>
+                        }
+                    </ul>
+                </div>
+            </td>
+        </tr>
+    }
+</table>

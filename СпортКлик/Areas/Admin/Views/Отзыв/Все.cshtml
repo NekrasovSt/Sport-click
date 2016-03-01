@@ -1,0 +1,17 @@
+﻿@model PageableData<Данные.Модели.Отзыв>
+@Html.Partial("_Все", Model.Список)
+<div class="pagination pagination-mini">
+    @Html.PageLinks(Model.PageNo, Model.CountPage, x => Url.Action(Действия.Все, new { page = x }))
+</div>
+@section Scripts
+{
+    <script>
+        $(function () {
+            $('body').popover({
+                selector: "[rel=popover]",
+                placement: "top",
+                html: true
+            });
+        });
+    </script>
+}

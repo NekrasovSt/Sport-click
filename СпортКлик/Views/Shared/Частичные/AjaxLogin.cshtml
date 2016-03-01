@@ -1,0 +1,21 @@
+﻿<div class="pull-right">
+    <ul class="nav">
+        @if (!Request.IsAuthenticated)
+        {
+            <li class="divider-vertical"></li>
+            <li>
+                <a href="#" class="LoginPopup"><i class="icon-home icon-black"></i>Вход</a>
+            </li>
+        }
+        else
+        {
+        
+            <li class="divider-vertical"></li>
+            <li>
+                <a href="#"><i class="icon-home icon-black"></i>@User.Identity.Name</a>
+            </li>
+        
+        }
+    </ul>
+</div>
+

@@ -1,0 +1,28 @@
+﻿@model СпортКлик.Models.ДляПредставленияЗагрузкиКартинки
+<fieldset>
+    <legend>Изображение</legend>
+    <div class="control-group">
+        <a href="#myModal" data-toggle="modal" class="span3">
+            <img src="@Url.Content("~/content/Download/")@Model.ИмяФайлаИзображения" alt="@Model.АльтернативныйТекст" class="img-polaroid">
+        </a>
+    </div>
+    <div class="span6">
+        @using (Html.BeginForm(Model.Действие, Model.Контроллер, FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            @Html.Hidden("Ид", Model.Ид)
+            <div class="control-group">
+                <input type="file" name="fileUpload" id="fileUpload"/>
+            </div>
+            <div class="control-group">
+                <button type="submit" class="btn">Загрузить</button>
+            </div>
+        }
+    </div>
+</fieldset>
+<div class="modal hide fade" id="myModal">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <div class="modal-body">
+        @{string orig = "original_" + Model.ИмяФайлаИзображения;}
+        <img src="@Url.Content("~/" + СпортКлик.Сервис.Константы.ПапкаДляХраненияИзображений)/@orig" alt="@Model.АльтернативныйТекст" class="img-polaroid">
+    </div>
+</div>

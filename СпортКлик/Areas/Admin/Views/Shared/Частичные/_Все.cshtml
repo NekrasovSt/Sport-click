@@ -1,0 +1,55 @@
+﻿@using Microsoft.Web.Mvc
+@using Данные.Интерфейсы
+@using СпортКлик.Areas.Admin.Controllers
+@model IEnumerable<ИИзображениеТовар>
+<table class="table table-striped table-bordered table-condensed">
+    <caption><em>Все @ViewBag.Title</em></caption>
+    <thead>
+        <tr>
+            <th>Имя
+            </th>
+            <th>Описание
+            </th>
+            <th>Действие</th>
+            <th>К товарам</th>
+        </tr>
+    </thead>
+    @foreach (ИИзображениеТовар m in Model)
+    {
+        <tr>
+            <td>
+                @СпортКлик.Сервис.Константы.Ограничить(m.Имя)
+            </td>
+            <td>
+                @СпортКлик.Сервис.Константы.Ограничить(m.Описание)
+            </td>
+            <td>
+                <div class="btn-group">
+                    <div class="btn dropdown-toggle btn-mini" data-toggle="dropdown">
+                        Действие                     
+                        <span class="caret"></span>
+                    </div>
+                    <ul class="dropdown-menu">
+                        @{
+                            <li><a href="@Url.Action("Изменить", new { Ид = m.Ид })"><i class="icon-edit"></i> Изменить</a></li>
+                            <li class="divider"></li>
+                            <li><a href="@Url.Action("Удалить", new { Ид = m.Ид })"><i class="icon-remove-circle"></i> Удалить</a></li>
+                               
+                        }
+                    </ul>
+                </div>
+            </td>
+            @if (ViewBag.Title == "Категории")
+            {  
+                <td>@(Html.ActionLink<ТоварController>(i => i.ВсеДляКатегории(m.Имя, 1), "Перейти к товарам", new { @class = "btn btn-mini" }))</td> 
+            }
+            @if (ViewBag.Title == "Производители")
+            {
+                <td>@(Html.ActionLink<ТоварController>(i => i.ВсеДляПроизводителя(m.Имя, 1), "Перейти к товарам", new { @class = "btn btn-mini" }))</td> 
+            }
+        </tr>
+    }
+</table>
+<p>
+    @Html.ActionLink("Создать новый", "Создать", null, new { @class = "btn" })
+</p>

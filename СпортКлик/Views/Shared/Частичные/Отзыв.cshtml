@@ -1,0 +1,22 @@
+﻿@using СпортКлик.Areas.Admin
+@model Данные.Модели.Отзыв
+@if (Model != null)
+{
+    <div class="row-fluid">
+        @using (Html.BeginForm())
+        {
+            @Html.ValidationSummary()
+            <fieldset class="form-horizontal">
+                <legend><span class="label label-info">Сдесь вы можите оставить отзыв</span></legend>
+               @* @Html.TextAreaFor(i => i.Текст)*@
+                @Html.TextAreaFor(i => i.Текст, new { @class = "text-editor" });
+                @Html.HiddenFor(i => i.Сущность)
+                @Html.HiddenFor(i => i.СущностьИд)
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary btn-mini">Сохранить</button>
+                    @Html.ActionLink("Отменить", "Все", null, new { @class = "btn btn-mini" })
+                </div>
+            </fieldset>
+        }
+    </div>
+}

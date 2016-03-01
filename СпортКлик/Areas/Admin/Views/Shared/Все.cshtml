@@ -1,0 +1,6 @@
+﻿@model PageableData<Данные.Интерфейсы.ИИзображениеТовар>
+@Html.Partial(ЧастичныеПредставления.Все, Model.Список)
+<div class="pagination pagination-mini">
+    @Html.PageLinks(Model.PageNo, Model.CountPage, x => Url.Action(Действия.Все, new { page = x }))
+</div>
+

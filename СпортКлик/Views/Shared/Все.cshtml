@@ -1,0 +1,25 @@
+﻿@using Данные.Модели
+@using Данные.Интерфейсы
+
+@model PageableData<Данные.Интерфейсы.ИИзображениеТовар>
+<div id="target">
+    @foreach (List<ИИзображениеТовар> i in Model.Группа)
+    {
+        <div class="row-fluid">
+            @foreach (ИИзображениеТовар t in i)
+            {
+                @Html.Partial(ЧастичныеПредставления.Миниатюра, t);
+            }
+        </div>
+    }
+    <div class="pagination pagination-mini">
+        @Html.PageLinks(Model.PageNo, Model.CountPage, x => Url.Action(Действия.Все, new { page = x }))
+    </div>
+</div>
+@section Scripts
+{
+    <script>
+        $(".group1").colorbox({ rel: 'group1' });
+    </script>
+
+}

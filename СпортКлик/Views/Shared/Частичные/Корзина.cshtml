@@ -1,0 +1,9 @@
+﻿@model int
+<div class="pull-right">
+    <ul class="nav">
+        <li class="divider-vertical"></li>
+        <li>
+            <a href="@Url.Action(Действия.ВКорзине, Контролеры.Корзина)"><i class="icon-shopping-cart icon-black"></i>@Model.ToString()</a>
+        </li>
+    </ul>
+</div>

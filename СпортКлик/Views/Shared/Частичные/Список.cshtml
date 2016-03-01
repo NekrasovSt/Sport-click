@@ -1,0 +1,20 @@
+﻿@using СпортКлик.Models
+@model IEnumerable<string>
+@{
+    Layout = null;
+}
+@foreach (string об in Model)
+{
+    object ид = Request.RequestContext.RouteData.Values[Константы.Имя];
+    string Ид = ид != null ? ид as string : string.Empty;
+    string ИмяКонтр = Request.RequestContext.RouteData.Values["Controller"].ToString();
+    string redirect = ViewBag.ControllerName;
+    if (Ид == об && ИмяКонтр == redirect)
+    {
+    <li class="active">@Html.ActionLink(об, Действия.ДетальноПоИмени, redirect, new { Имя = об }, null)</li> 
+    }
+    else
+    {
+    <li>@Html.ActionLink(об, Действия.ДетальноПоИмени, redirect, new { Имя = об }, null)</li>
+    }
+}

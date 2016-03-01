@@ -1,0 +1,34 @@
+﻿@model СпортКлик.Models.LogOnViewModel
+
+@using (Html.BeginForm())
+{
+    <fieldset>
+        <legend class="">Вход</legend>
+                @Html.ValidationSummary(true)
+        <div class="control-group">
+            <!-- Username -->
+            <label class="control-label" for="username">Имя пользователя</label>
+            <div class="controls">
+                @Html.TextBoxFor(i => i.UserName, new { @class = "input-xlarge" })
+                @Html.ValidationMessageFor(i => i.UserName, null)
+            </div>
+        </div>
+
+        <div class="control-group">
+            <!-- Password-->
+            <label class="control-label" for="password">Пароль</label>
+            <div class="controls">
+                @Html.PasswordFor(i => i.Password, new { @class = "input-xlarge" })
+                @Html.ValidationMessageFor(i => i.Password, null, new {@class = "error" })
+            </div>
+        </div>
+
+
+        <div class="control-group">
+            <!-- Button -->
+            <div class="controls">
+                <button class="btn btn-success" type="submit">Войти</button>
+            </div>
+        </div>
+    </fieldset>
+}

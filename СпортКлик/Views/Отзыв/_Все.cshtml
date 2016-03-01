@@ -1,0 +1,10 @@
+﻿@using Данные.Модели
+@model PageableData<Отзыв>
+
+@foreach (Отзыв отз in Model.Список)
+{
+    <blockquote>
+            @отз.Текст.ВывестиКакРазметку()
+        <small>Разместил: @отз.Пользователь</small><span class="label label-inverse">@отз.Дата</span>
+    </blockquote>
+}

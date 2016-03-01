@@ -1,0 +1,28 @@
+﻿@using СпортКлик.Areas.Admin
+@model Данные.Модели.Категории
+
+<div class="row-fluid">
+    @using (Html.BeginForm())
+    {
+        @Html.ValidationSummary(true)
+        <fieldset class="form-horizontal">
+            <legend>@ViewBag.Title-@Model.Имя</legend>           
+            @Html.AdminTextBox(i => i.Имя)
+            @Html.AdminTextArea(i => i.Описание)
+            @Html.HiddenFor(i => i.ИмяФайлаИзображения)
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary">Сохранить</button>
+                @Html.ActionLink("Отменить", "Все", null, new { @class = "btn " })
+            </div>
+        </fieldset>
+    }
+</div>
+<div class="row-fluid">
+    @{ Html.RenderPartial(ЧастичныеПредставления.ЗагрузитьКартинку, new СпортКлик.Models.ДляПредставленияЗагрузкиКартинки() { АльтернативныйТекст = Model.Имя, Действие = "ЗагрузитьКартинку", Ид = Model.Ид, ИмяФайлаИзображения = Model.ИмяФайлаИзображения, Контроллер = Html.ViewContext.RouteData.Values["controller"].ToString() }); }
+</div>
+@section Scripts
+{
+    <script type="text/javascript">
+        CKEDITOR.replace("Описание");
+    </script>
+}

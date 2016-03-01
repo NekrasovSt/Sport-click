@@ -1,0 +1,61 @@
+﻿@using Данные.Модели
+@model IEnumerable<Отзыв>
+<h4>Все @ViewBag.Title</h4>
+<table class="table table-striped">
+    <caption></caption>
+    <thead>
+        <tr>
+            <th>Ник
+            </th>
+            <th>Сущность
+            </th>
+            <th>Разрешен</th>
+            <th>Отзыв</th>
+            <th>Действие</th>
+            <th>Прочитать</th>
+        </tr>
+    </thead>
+    @foreach (Отзыв m in Model)
+    {
+        <tr>
+            <td>
+                @m.Пользователь
+            </td>
+            <td>
+                @m.Сущность
+            </td>
+            <td>@if (m.Проверен)
+                {
+                <span class="label label-success">Да</span> 
+                }
+                else
+                {
+                <span class="label label-important">Нет</span> 
+                }
+            </td>
+            <td>@Константы.Ограничить(m.Текст)</td>
+            <td>
+                <div class="btn-group">
+                    <button class="btn btn-small">Действие</button>
+                    <div class="btn btn-small dropdown-toggle" data-toggle="dropdown">
+                        <span class="caret"></span>
+                    </div>
+                    <ul class="dropdown-menu">
+                        @if (!m.Проверен)
+                        {
+                            <li>@Html.ActionLink("Разрешить", Действия.Разрешить, new { Ид = m.Ид })</li>
+                        }
+                        else
+                        {
+                            <li>@Html.ActionLink("Запретить", Действия.Запретить, new { Ид = m.Ид })</li>
+                        }
+                    </ul>
+                </div>
+            </td>   
+            <td>
+                <a href="#" class="btn btn-small" rel="popover"  data-title='@m.Пользователь' data-content="@m.Текст.ВывестиКакРазметку()">Прочитать</a>
+            </td>
+        </tr>
+    }
+</table>
+

@@ -1,0 +1,11 @@
+﻿<div class="pull-right">
+    @if (Request.IsAuthenticated && User.IsInRole(РолиПользователей.Администратор))
+    {
+        <ul class="nav">
+            <li class="divider-vertical"></li>
+            <li>
+                <a href="@Url.Action(Действия.Онас, new { area = ОбластиПроекта.Админка, controller = Контролеры.ДомАдмин })"><i class="icon-lock icon-black"></i>В админку</a>
+            </li>
+        </ul>
+    }
+</div>

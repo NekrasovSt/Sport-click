@@ -1,0 +1,8 @@
+﻿@model string
+<div class="control-group">
+    <label class="control-label">@Model</label>
+    <div class="controls">
+        @Html.TextBoxFor(i => i, new { @class = "input-xlarge" })
+        @Html.ValidationMessageFor(i => i, null, new { @class = "help-inline" })
+    </div>
+</div>

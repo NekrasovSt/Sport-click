@@ -1,0 +1,32 @@
+@model Данные.Интерфейсы.ИЗображение
+<div class="page-header">
+    <h4>@ViewBag.Title-@Model.Имя</h4>
+</div>
+<div class="row-fluid">
+    <div class="span4">
+        @{
+            string orig;
+            if (string.IsNullOrEmpty(Model.ИмяФайлаИзображения))
+            {
+                orig = "НетИзображения_original.png";
+            }
+            else
+            {
+                orig = "original_" + Model.ИмяФайлаИзображения;
+            }
+        }
+        <img src="@Url.Content("~/" + Константы.ПапкаДляХраненияИзображений)/@orig" alt="@Model.Имя" class="img-polaroid">
+    </div>
+    <div class="span8">
+        <h4>Описание</h4>
+        @if (!string.IsNullOrEmpty(Model.Описание))
+        {
+
+            @Model.Описание.ВывестиКакРазметку()
+        }
+        else
+        {
+            <em>Описание отсутствует</em>
+        }
+    </div>
+</div>

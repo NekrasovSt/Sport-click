@@ -1,0 +1,6 @@
+﻿@if (User.Identity.IsAuthenticated)
+{
+    { Html.RenderAction<СпортКлик.Controllers.ОтзывController>(i => i.Добавить()); }
+}
+
+@{ Html.RenderAction<СпортКлик.Controllers.ОтзывController>(i => i.ВсеПроверенные(1)); }

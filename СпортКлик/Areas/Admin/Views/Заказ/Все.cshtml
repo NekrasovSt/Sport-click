@@ -1,0 +1,52 @@
+﻿@{
+    ViewBag.Title = "Все";
+}
+@using Данные.Модели
+@model PageableData<Заказ>
+<div class="page-header">
+    <h5>Заказы</h5>
+</div>
+<div class="row-fuild">
+    <div class="well">
+        <table class="table table-condensed">
+            <thead>
+                <tr>
+                    <th>Дата создания
+                    </th>
+                    <th>ФИО клиента
+                    </th>
+                    <th>Ник клиента</th>
+                    <th>Текущий статус</th>
+                    <th>Изменить</th>
+                    <th>Дата изменения статуса</th>
+                </tr>
+            </thead>
+            @foreach (Заказ m in Model.Список)
+            {
+                <tr>
+                    <td>
+                        @m.ДатаСоздания
+                    </td>
+                    <td>
+                        @m.ФамилияКлиента @m.ИмяКлиента @m.ОтчествоКлиента
+                    </td>
+                    <td>
+                        @Membership.GetUser(m.ИдКлиента).UserName
+                    </td>
+                    <td>
+                        @m.СтатусЗаказа.Имя
+                    </td>
+                    <td>
+                        @Html.ActionLink("Изменить", Действия.ИзменитьСтатус, Контролеры.Заказ, new { ИдЗаказ = m.Ид }, new { @class = "btn btn-success btn-mini" })
+                    </td>
+                    <td>
+                        @m.ДатаИзменения
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
+</div>
+<div class="pagination pagination-mini">
+    @Html.PageLinks(Model.PageNo, Model.CountPage, x => Url.Action(Действия.Все, new { page = x }))
+</div>
